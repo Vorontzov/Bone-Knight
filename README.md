@@ -4,7 +4,7 @@ An original browser fantasy game starring **Yips**, a little skeleton in an over
 
 ## Play
 
-[Open Bone Knight](https://bone-knight-yips-pine-forest.vorontzov.chatgpt.site)
+[Open Bone Knight](https://vorontzov.github.io/Bone-Knight/)
 
 Run `npm start`, then open **http://127.0.0.1:4173** in your browser. No installation or build step is needed. Node.js 20 or later is required for the local server. The `dist` folder can also be placed on any static web host.
 
@@ -39,3 +39,4 @@ Progress is stored locally in this browser, not in an online account. Clearing b
 `npm test` runs combat, progression, persistence, collision, and route-reachability tests. `npm run check` checks JavaScript syntax. The production files are in `dist/`; `test/preview-fixtures.mjs` is an isolated local UI test server, never included in the static site.
 
 The world, pixel illustrations, bitmap lettering, characters, and writing are original to this project. Its dodge-box battle format was inspired by [Undertale](https://undertale.com/about/); no Undertale assets or code are included.
+
