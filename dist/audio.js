@@ -1,0 +1,7 @@
+// Character voices are short, hand-tuned oscillator syllables. No external audio assets.
+const VOICES={Yips:{hz:690,wave:'square',length:.042,volume:.022,slide:1.16},Bram:{hz:105,wave:'triangle',length:.07,volume:.105,slide:.72},Witch:{hz:310,wave:'sawtooth',length:.065,volume:.024,slide:1.43},Wolf:{hz:125,wave:'sawtooth',length:.095,volume:.04,slide:.42},Narrator:{hz:430,wave:'sine',length:.035,volume:.045,slide:.96}};
+export class Voices{
+ constructor(){this.ctx=null;this.enabled=true;this.last=0;this.syllable=0;}
+ unlock(){try{if(!this.ctx)this.ctx=new (window.AudioContext||window.webkitAudioContext)();if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});}catch{this.enabled=false;}}
+ speak(speaker,char){if(!this.enabled||!this.ctx||!/[\p{L}\p{N}!?]/u.test(char))return;const c=this.ctx,t=c.currentTime;if(t-this.last<.046)return;this.last=t;const fallback={hz:180+(Array.from(speaker).reduce((n,s)=>n+s.charCodeAt(0),0)%290),wave:'triangle',length:.05,volume:.05,slide:1.1};const v=VOICES[speaker]||fallback;const o=c.createOscillator(),g=c.createGain();o.type=v.wave;const hz=v.hz*(1+Math.sin(this.syllable++*2.4)*.085);o.frequency.setValueAtTime(hz,t);o.frequency.exponentialRampToValueAtTime(hz*v.slide,t+v.length);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v.volume,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+v.length);o.connect(g).connect(c.destination);o.start(t);o.stop(t+v.length+.01);}
+}

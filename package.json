@@ -1,0 +1,9 @@
+{
+  "name": "bone-knight",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A pixel fantasy adventure about Yips, a little skeleton knight.",
+  "scripts": {"start": "node server.mjs", "test": "node --test test/*.test.js", "check": "node --check dist/game.js && node --check dist/art.js && node --check dist/world.js && node --check dist/combat.js && node --check dist/state.js && node --check dist/audio.js"},
+  "engines": {"node": ">=20"}
+}
