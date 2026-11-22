@@ -1,0 +1,26 @@
+.pocket-hud{display:flex;align-items:center;justify-content:flex-end;gap:1.1em;margin-top:.7em;color:#e3c77f;font-size:1.25cqw}
+#pack-button{border:1px solid #8b9b79;background:#142b2c;color:#eee3be;padding:.45em .9em;font-size:inherit}
+#pack-button:hover{background:#345046}
+.shop-panel{width:78%;height:86%;background:#10272bea;border:3px solid #a1aa87;box-shadow:7px 7px 0 #07181c;padding:2.5%;display:flex;flex-direction:column;gap:1.3cqw}
+.shop-header{display:flex;align-items:center;gap:1.3cqw;flex:none;min-height:5cqw}
+.shop-header canvas{width:6.5cqw;height:7.2cqw;object-fit:contain;image-rendering:pixelated;background:#1d3735;border:1px solid #627c66;flex:none}
+.shop-header>div{flex:1;min-width:0}
+.shop-header h2{font-size:2.6cqw;letter-spacing:-.06em;margin:.25em 0;color:#f0dfb4;line-height:1.05}
+.shop-header p{font-size:1.15cqw;color:#aebea5;margin:.55em 0 0}
+.shop-header .eyebrow{font-size:.85cqw;letter-spacing:.16em}
+.shop-wallet{display:flex;align-items:center;justify-content:space-between;padding:.6cqw .85cqw;background:#203b34;border-block:1px solid #49634d;color:#e7cb84;font-size:1.5cqw;flex:none}
+.shop-panel .button.small{font-size:1.15cqw;min-width:0;padding:.7em .85em;flex:none}
+.shop-panel button:disabled{opacity:.46;cursor:default;transform:none}
+.item-list{flex:1;min-height:0;overflow-y:auto;scrollbar-color:#7d9378 #142c2d;padding-right:.5cqw}
+.item-row{display:flex;align-items:center;gap:1.1cqw;padding:.8cqw 0;border-bottom:1px solid #3b5548;min-height:7cqw}
+.item-row>canvas{width:5cqw;height:5cqw;image-rendering:pixelated;background:#203932;flex:none;border:1px solid #52694f}
+.item-info{flex:1;min-width:0}
+.item-info h3{font-size:1.6cqw;color:#ecdbb2;margin:0 0 .35em;line-height:1.1}
+.item-info p{font-size:1.1cqw;color:#b5c3ad;margin:0 0 .35em;line-height:1.4}
+.item-info small{font-size:1cqw;color:#c7b779}
+.shop-status{margin:0;font-size:1.1cqw;line-height:1.5;color:#ded2aa;min-height:1.6cqw;flex:none}
+.pack-footer{border-top:1px solid #52694f;padding-top:1cqw;display:flex;gap:1.3cqw;align-items:center;flex:none}
+.empty-pack{font-size:1.5cqw;color:#aabfa9;margin:3cqw 0;line-height:1.6}
+#dialogue-choices{gap:.6em}
+#dialogue-choices button{padding:.4em .8em}
+.controls{gap:1.1em}

@@ -1,5 +1,5 @@
 // Character voices are short, hand-tuned oscillator syllables. No external audio assets.
-const VOICES={Yips:{hz:690,wave:'square',length:.042,volume:.022,slide:1.16},Bram:{hz:105,wave:'triangle',length:.07,volume:.105,slide:.72},Witch:{hz:310,wave:'sawtooth',length:.065,volume:.024,slide:1.43},Wolf:{hz:125,wave:'sawtooth',length:.095,volume:.04,slide:.42},Narrator:{hz:430,wave:'sine',length:.035,volume:.045,slide:.96}};
+const VOICES={Stranger:{hz:83,wave:'triangle',length:.09,volume:.09,slide:.82},Mallow:{hz:385,wave:'sine',length:.06,volume:.06,slide:1.22},Tilda:{hz:265,wave:'square',length:.035,volume:.018,slide:1.08},Yips:{hz:690,wave:'square',length:.042,volume:.022,slide:1.16},Bram:{hz:105,wave:'triangle',length:.07,volume:.105,slide:.72},Witch:{hz:310,wave:'sawtooth',length:.065,volume:.024,slide:1.43},Wolf:{hz:125,wave:'sawtooth',length:.095,volume:.04,slide:.42},Narrator:{hz:430,wave:'sine',length:.035,volume:.045,slide:.96}};
 export class Voices{
  constructor(){this.ctx=null;this.enabled=true;this.last=0;this.syllable=0;}
  unlock(){try{if(!this.ctx)this.ctx=new (window.AudioContext||window.webkitAudioContext)();if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});}catch{this.enabled=false;}}

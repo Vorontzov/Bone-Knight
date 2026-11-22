@@ -60,14 +60,17 @@ const shops = [
   { id: 'smith', x: 430, y: 470, w: 170, h: 175, label: 'IRON & ASH', style: 'smith' },
   { id: 'bakery', x: 800, y: 470, w: 180, h: 175, label: 'CRUMB & CRUST', style: 'shop' },
   { id: 'apothecary', x: 1020, y: 470, w: 200, h: 175, label: 'MOTH & MINT', style: 'shop' },
+  { id: 'herbalist', x: 150, y: 755, w: 225, h: 148, label: 'MOSS & MALLOW', style: 'herbalist' },
+  { id: 'tailor', x: 1025, y: 755, w: 225, h: 148, label: 'BUTTON & THREAD', style: 'tailor' },
 ];
 town.buildings = [...homes, ...shops].map(b => ({ ...b, door: { x: b.x + b.w / 2, y: b.y + b.h + 10 } }));
 town.paths.push(...town.buildings.map(b => rect(b.door.x - 29, b.door.y - 15, 58, 45, 'stone')));
+town.paths.push(rect(140, 921, 1120, 38, 'stone'));
 town.walls.push(rect(672, 774, 56, 44));
 town.props.push(
   { type: 'fountain', x: 700, y: 812 },
   { type: 'bench', x: 545, y: 828 }, { type: 'bench', x: 855, y: 828 },
-  { type: 'cart', x: 1050, y: 815 }, { type: 'well', x: 1090, y: 390 },
+  { type: 'cart', x: 970, y: 915 }, { type: 'well', x: 1090, y: 390 },
   { type: 'barrel', x: 401, y: 637 }, { type: 'barrel', x: 146, y: 638 },
   { type: 'crate', x: 1240, y: 636 }, { type: 'crate', x: 997, y: 626 },
   { type: 'sign', x: 783, y: 920, text: 'PINE FOREST' },
@@ -78,6 +81,8 @@ town.props.push(
 );
 town.interactables.push(
   { id: 'tavern-door', kind: 'door', ...town.buildings.find(b => b.id === 'tavern').door, label: 'Enter the tavern', toArea: 'tavern', toX: 350, toY: 405 },
+  { id: 'herbalist-door', kind: 'door', ...town.buildings.find(b => b.id === 'herbalist').door, label: 'Enter Moss & Mallow', toArea: 'herbalist',toX:320,toY:395 },
+  { id: 'tailor-door', kind: 'door', ...town.buildings.find(b => b.id === 'tailor').door, label: 'Enter Button & Thread', toArea: 'tailor',toX:320,toY:395 },
   exit('town-forest', 700, 1120, 'Enter Pine Forest', 'forest', 240, 2200),
   { id: 'smith-npc', kind: 'npc', x: 514, y: 686, label: 'Talk to Flint', sprite: 'villager', name: 'Flint', lines: [
     line('Flint', 'That sword is nearly as tall as you are.'),
@@ -89,12 +94,12 @@ town.interactables.push(
     line('Yips', 'That last part feels important.'),
     line('Pippa', 'It has been a difficult week.'),
   ] },
-  { id: 'gardener', kind: 'npc', x: 1020, y: 845, label: 'Talk to Rowan', sprite: 'villager', name: 'Rowan', lines: [
+  { id: 'gardener', kind: 'npc', x: 990, y: 860, label: 'Talk to Rowan', sprite: 'villager', name: 'Rowan', lines: [
     line('Rowan', 'The witch has put a thorn spell over the old trail. Eight wolves guard the way to her den.'),
     line('Yips', 'Eight? I only have one sword.'),
     line('Rowan', 'Then use it eight times. Well. A few more than eight, probably.'),
   ] },
-  inspect('fountain', 700, 859, 'Look at the fountain', 'Someone has tossed a button into the fountain. A very small wish.'),
+  {id:'fountain',kind:'fountain',x:700,y:850,label:'Hop into the fountain'},
   inspect('bridge-sign', 781, 918, 'Read the trail sign', 'PINE FOREST. Follow the lantern road. Rest at the blue lanterns. Do not drink the glowing puddles.', 'Trail sign'),
   inspect('apothecary-shop', 1120, 674, 'Read the shop notice', 'CLOSED WHILE THE FOREST IS HEXED. If you are the witch: we want our jars back.', 'Shop notice'),
   inspect('house1-door', 260, 366, 'Knock on Wren Cottage', 'A voice from inside says, "If you are here about the roof, it only leaks when it rains."'),
@@ -110,6 +115,9 @@ for (const [x, y, seed] of [[190, 840, 1], [275, 870, 2], [350, 915, 3], [1175, 
 for (let i = 0; i < 32; i++) {
   town.props.push({ type: 'flower', x: 160 + (i * 89) % 1080, y: 880 + (i * 13) % 65, seed: i });
 }
+// The southern shops have clear doorsteps and a continuous walk along the moat.
+town.trees=town.trees.filter(t=>!town.buildings.some(b=>inside(b,t.x,t.y,36)));
+town.props=town.props.filter(p=>p.type!=='flower'||!town.buildings.some(b=>inside(b,p.x,p.y,18)));
 
 const tavern = area('tavern', 'The Crooked Bone', 700, 500, { x: 350, y: 405 }, {
   subtitle: 'Good company. Questionable soup.', biome: 'interior', interior: true, ground: '#50382d',
@@ -301,7 +309,28 @@ const den = area('den', 'The Witch’s Den', 700, 500, { x: 350, y: 405 }, {
   ],
 });
 
-export const AREAS = { town, tavern, forest, deepwood, clearing, den };
+function makeShop(id,label,speaker,subtitle,doorX){
+ const a=area(id,label,640,480,{x:320,y:395},{subtitle,biome:'interior',interior:true,
+  paths:[rect(38,60,564,385,'wood')],
+  walls:[rect(0,0,640,60),rect(0,0,32,480),rect(608,0,32,480),rect(0,448,640,32),rect(210,180,220,30)],
+  props:[{type:'counter',x:320,y:210,w:220},{type:'shelf',x:130,y:120},{type:'shelf',x:510,y:120},
+   {type:'rug',x:320,y:350,w:160,h:108},{type:'table',x:130,y:310},{type:'table',x:510,y:310},
+   {type:'lantern',x:60,y:240},{type:'lantern',x:580,y:240},{type:'candle',x:388,y:177}],
+  interactables:[{id:id+'-merchant',kind:'merchant',shopId:id,x:320,y:160,label:'Talk to '+speaker,sprite:id,name:speaker},
+   exit(id+'-exit',320,425,'Leave '+label,'town',doorX,941)]
+ });
+ if(id==='herbalist'){
+  for(const [x,y] of [[90,180],[550,180],[130,288],[510,288],[90,405],[550,405]])a.props.push({type:'herbs',x,y});
+  a.interactables.push(inspect('mallow-notes',130,345,'Read Mallow’s notes','MINT: for calm. PINE: for mending. NETTLE: for people who never knock.','Mallow’s notebook'));
+ }else{
+  for(const [x,y] of [[100,190],[540,190],[130,288],[510,288]])a.props.push({type:'thread',x,y});
+  a.interactables.push(inspect('tailor-pattern',510,345,'Inspect the pattern','A tiny helmet, drawn beside a tiny scarf. Underneath: LEAVE ROOM FOR BRAVERY.'));
+ }
+ return a;
+}
+const herbalist=makeShop('herbalist','Moss & Mallow','Mallow','Herbs, warm flasks, and good advice',262.5);
+const tailor=makeShop('tailor','Button & Thread','Tilda','Fine stitches for very small adventures',1137.5);
+export const AREAS = { town, tavern, herbalist, tailor, forest, deepwood, clearing, den };
 export const allQuestWolves = Array.from({ length: 8 }, (_, i) => `wolf${i + 1}`);
 export const routeLength = forest.routeLength + deepwood.routeLength;
 export const getArea = id => AREAS[id] || AREAS.town;

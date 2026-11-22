@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "description": "A pixel fantasy adventure about Yips, a little skeleton knight.",
-  "scripts": {"start": "node server.mjs", "test": "node --test test/*.test.js", "check": "node --check dist/game.js && node --check dist/art.js && node --check dist/world.js && node --check dist/combat.js && node --check dist/state.js && node --check dist/audio.js"},
+  "scripts": {"start": "node server.mjs", "test": "node --test test/*.test.js", "check": "node --check dist/game.js && node --check dist/art.js && node --check dist/world.js && node --check dist/combat.js && node --check dist/state.js && node --check dist/audio.js && node --check dist/shops.js && node --check dist/fountain.js"},
   "engines": {"node": ">=20"}
 }

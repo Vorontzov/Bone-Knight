@@ -14,6 +14,8 @@ The home screen has actual tavern screenshots. Choose **Start game** to open the
 | --- | --- |
 | WASD / arrow keys | Walk or dodge |
 | E / Enter | Talk, inspect, open doors, advance dialogue, or attack on your turn |
+| H | Hop into or climb out of the town fountain |
+| I | Open or close Yips’s pack |
 | M | Open or close the area map |
 | Esc | Pause / close map |
 | Shift | Precise movement in battle |
@@ -24,8 +26,10 @@ Touch controls are available on devices with coarse pointers; landscape orientat
 
 ## Chapter One
 
-- Six connected areas: Bramblewick, The Crooked Bone tavern, Pine Forest, The Deepwood, Witchlight Clearing, and the witch's den.
-- Four cottages and four shops around a freely explorable square, surrounded by a moat with a bridge.
+- Eight connected areas, including the new Moss & Mallow herbalist and Button & Thread tailor interiors.
+- Four cottages and six businesses around a freely explorable square, surrounded by a moat with a bridge.
+- Press **H** beside the fountain to meet a hooded stranger and receive a burger. Tell Bram about it at the tavern. The gift can only be collected once.
+- Buy food from Bram, remedies from Mallow, and wearable scarves from Tilda. Start with 18 coins and collect 4 more from each defeated wolf. Food heals between battles; scarves change Yips’s appearance. Open the pack with **I**.
 - A winding forest journey with eight wolves, rest lanterns, signs, side clearings, original dialogue, and environmental details. Designed for roughly 15–20 minutes on a first playthrough; individual times vary.
 - Yips has **25 HP** and deals **3 damage** per sword strike. Wolves have **15 HP** and make four telegraphed scratch attempts before each attack opening. The witch has **30 HP**; each potion warns for **five seconds** and deals **5 damage** if it catches you.
 - Each speaking character has its own synthesized voice. There are no external art, font, sound, or runtime dependencies.
@@ -39,4 +43,3 @@ Progress is stored locally in this browser, not in an online account. Clearing b
 `npm test` runs combat, progression, persistence, collision, and route-reachability tests. `npm run check` checks JavaScript syntax. The production files are in `dist/`; `test/preview-fixtures.mjs` is an isolated local UI test server, never included in the static site.
 
 The world, pixel illustrations, bitmap lettering, characters, and writing are original to this project. Its dodge-box battle format was inspired by [Undertale](https://undertale.com/about/); no Undertale assets or code are included.
-
